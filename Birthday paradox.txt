@@ -1,0 +1,33 @@
+import random
+
+class BirthdayParadox:
+    def __init__(self, num_people, trials=1000):
+        # attributes (data members)
+        self.num_people = num_people
+        self.trials = trials
+
+    def has_duplicate_birthday(self):
+        # simulate birthdays for one group
+        birthdays = set()
+        for _ in range(self.num_people):
+            birthday = random.randint(1, 365)  # random day in year
+            if birthday in birthdays:          # check duplicate
+                return True
+            birthdays.add(birthday)
+        return False
+
+    def run_simulation(self):
+        # run experiment many times
+        count = 0
+        for _ in range(self.trials):
+            if self.has_duplicate_birthday():
+                count += 1
+        probability = count / self.trials
+        return probability
+
+
+# Main program (testing with different group sizes)
+for n in [5, 10, 15, 20, 50, 100]:
+    bp = BirthdayParadox(n)  # create object
+    result = bp.run_simulation()
+    print(f"For n={n}, Probability of shared birthday ≈ {result:.2f}")
